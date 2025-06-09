@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Bot, Send, Minimize2, Maximize2, X, RefreshCcw, Sparkles, Copy, ThumbsUp, ThumbsDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -18,6 +17,7 @@ interface Message {
 
 interface FloatingAIAssistantProps {
   className?: string;
+  onClose?: () => void;
 }
 
 const predefinedResponses = [
@@ -36,8 +36,7 @@ const quickActions = [
   { label: "Check Attendance", icon: "✅" },
 ];
 
-const FloatingAIAssistant: React.FC<FloatingAIAssistantProps> = ({ className }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const FloatingAIAssistant: React.FC<FloatingAIAssistantProps> = ({ className, onClose }) => {
   const [isMinimized, setIsMinimized] = useState(false);
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<Message[]>([
@@ -97,40 +96,15 @@ const FloatingAIAssistant: React.FC<FloatingAIAssistantProps> = ({ className }) 
     navigator.clipboard.writeText(text);
   };
 
-  const handleClose = () => {
-    setIsOpen(false);
-    setIsMinimized(false); // Reset minimized state when closing
-  };
-
   const handleMinimize = () => {
     setIsMinimized(!isMinimized);
   };
 
-  if (!isOpen) {
-    return (
-      <div 
-        className={cn(
-          "fixed z-50 transition-all duration-300 ease-in-out",
-          className
-        )}
-        style={{ 
-          bottom: `${dragPosition.y}px`, 
-          right: `${dragPosition.x}px` 
-        }}
-      >
-        <Button
-          onClick={() => setIsOpen(true)}
-          className="h-12 w-12 rounded-full bg-gradient-to-br from-slate-800 via-slate-900 to-slate-950 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group relative overflow-hidden"
-          size="icon"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-600 to-slate-700 opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
-          <Bot className="h-5 w-5 text-white group-hover:animate-pulse relative z-10" />
-          <div className="absolute -top-1 -right-1 h-3 w-3 bg-green-400 rounded-full animate-ping" />
-          <div className="absolute -top-1 -right-1 h-3 w-3 bg-green-400 rounded-full" />
-        </Button>
-      </div>
-    );
-  }
+  const handleClose = () => {
+    if (onClose) {
+      onClose();
+    }
+  };
 
   return (
     <div 

@@ -1,9 +1,7 @@
-
 import React, { useState, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Header from './Header';
-import FloatingAIAssistant from '@/components/ai-assistant/FloatingAIAssistant';
 
 const Layout: React.FC = () => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -58,9 +56,6 @@ const Layout: React.FC = () => {
           <Outlet />
         </div>
       </main>
-      
-      {/* AI Assistant available on every page */}
-      <FloatingAIAssistant />
     </div>
   );
 };

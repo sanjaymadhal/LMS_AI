@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Sparkles } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,10 +6,11 @@ import RecentActivity from "@/components/dashboard/RecentActivity";
 import UpcomingLessons from "@/components/dashboard/UpcomingLessons";
 import CourseProgress from "@/components/dashboard/CourseProgress";
 import AverageGrades from "@/components/dashboard/AverageGrades";
+import UnifiedFAB from '@/components/UnifiedFAB';
 
 const Dashboard: React.FC = () => {
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className="relative space-y-8 animate-fade-in">
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
         <div>
           <h1 className="text-3xl font-bold">Welcome back, Professor!</h1>
@@ -97,6 +97,9 @@ const Dashboard: React.FC = () => {
           </CardContent>
         </Card>
       </div>
+      
+      {/* Unified FAB */}
+      <UnifiedFAB />
     </div>
   );
 };

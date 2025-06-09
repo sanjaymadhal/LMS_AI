@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -44,11 +43,8 @@ const LiveClassroom: React.FC = () => {
     }
   }, [navigate]);
 
-  const handlePresentMode = () => {
-    toast({
-      title: "Present Mode",
-      description: "This would enter presentation mode for teaching in a real implementation.",
-    });
+  const handlePresentMode = (subjectId: string) => {
+    navigate(`/live-classroom/${subjectId}`);
   };
 
   const handleSubjectSelect = (subjectId: string) => {
@@ -78,12 +74,6 @@ const LiveClassroom: React.FC = () => {
         <div>
           <h1 className="text-3xl font-bold">Live Classroom</h1>
           <p className="text-muted-foreground">Present your teaching materials and manage attendance</p>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <Button size="sm" className="hover-scale" onClick={handlePresentMode}>
-            <Play className="h-4 w-4 mr-1" />
-            Enter Presentation Mode
-          </Button>
         </div>
       </div>
       
@@ -135,12 +125,12 @@ const LiveClassroom: React.FC = () => {
             <WorkspaceSubjectGrid 
               semester={currentSemester} 
               searchQuery={searchQuery} 
-              onSubjectSelect={handleSubjectSelect}
+              onSubjectSelect={handlePresentMode}
             /> : 
             <WorkspaceSubjectList 
               semester={currentSemester} 
               searchQuery={searchQuery} 
-              onSubjectSelect={handleSubjectSelect}
+              onSubjectSelect={handlePresentMode}
             />
           }
         </CardContent>
@@ -149,17 +139,14 @@ const LiveClassroom: React.FC = () => {
       <AlertDialog open={showAttendanceDialog} onOpenChange={setShowAttendanceDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Mark attendance for this class?</AlertDialogTitle>
+            <AlertDialogTitle>Mark Attendance</AlertDialogTitle>
             <AlertDialogDescription>
-              It's recommended to take attendance before starting the presentation.
+              Would you like to mark attendance before starting the presentation?
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel onClick={handleSkipAttendance}>Skip</AlertDialogCancel>
-            <AlertDialogAction onClick={handleMarkAttendance}>
-              <CalendarCheck className="mr-2 h-4 w-4" />
-              Mark Attendance
-            </AlertDialogAction>
+            <AlertDialogAction onClick={handleMarkAttendance}>Mark Attendance</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
